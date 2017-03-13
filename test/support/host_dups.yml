@@ -1,0 +1,27 @@
+---
+asterisk_mesh:
+  nodes:
+    - extension: 1XX
+      name: host1
+      host: host1.pro
+
+    - extension: 2XX
+      primary_digits: 3
+      name: uniq
+      host: host2.com
+
+    - extension: 3XXX
+      name: uniq2
+      host: host2.com
+
+    - extension: 4XX
+      name: host15
+      host: host3.pro
+
+    - extension: 5XX
+      name: host3
+      host: host3.pro
+
+    - extension: 6XX
+      name: host4
+      host: host3.pro

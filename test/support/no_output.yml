@@ -1,0 +1,14 @@
+---
+asterisk_mesh:
+  nodes:
+    - extension: 1XX
+      name: host1
+      host: host1.org
+
+    - extension: 2XX
+      primary_digits: 3
+      name: host2
+      host: host2.server.com
+
+    - extension: 3XXX
+      host: host3

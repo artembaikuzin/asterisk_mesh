@@ -1,0 +1,6 @@
+---
+asterisk_mesh:
+  nodes:
+    - extension: 1XX
+      name: host1
+      host: host1.pro
