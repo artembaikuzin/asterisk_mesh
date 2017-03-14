@@ -1,0 +1,14 @@
+---
+asterisk_mesh:
+  nodes:
+    - extension: 1XX
+
+    - extension: 2XX
+      host: n1.host.pro
+
+    - extension: 3XX
+
+    - extension: 4XX
+      host: n3.host.pro
+
+    - extension: 5XX

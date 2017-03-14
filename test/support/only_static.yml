@@ -1,0 +1,13 @@
+---
+asterisk_mesh:
+  nodes:
+    - extension: 1XX
+      host: n1.host.pro
+
+    - extension: 2XX
+      operator_prefix: 'operator'
+      host: n2.host.pro
+
+    - extension: 3XXX
+      prefix: '55'
+      host: n3.host.pro

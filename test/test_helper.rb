@@ -4,3 +4,5 @@ require 'asterisk_mesh'
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
+
+require 'support_helper'
