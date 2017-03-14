@@ -87,14 +87,4 @@ class NetworkFileTest < Minitest::Test
     assert_equal('Hosts have duplicates: host2.com (2), host3.pro (3)',
                  exception.message)
   end
-
-  def test_init_node
-    net = @net_file.parse(yml_file('only_static.yml'))
-    net['asterisk_mesh']['nodes'].each do |node|
-      assert_equal('', node[:iax])
-      assert_equal('', node[:iax_reg])
-      assert_equal('', node[:dialplan_from])
-      assert_equal('', node[:dialplan_to])
-    end
-  end
 end

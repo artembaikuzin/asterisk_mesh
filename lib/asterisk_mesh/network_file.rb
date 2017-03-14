@@ -61,8 +61,6 @@ module AsteriskMesh
         add_name_dup(name_dups, node)
         add_host_dup(host_dups, node)
 
-        init(node)
-
         no_static_nodes = false if no_static_nodes && !node['host'].nil?
         node_id += 1
       end
@@ -95,7 +93,7 @@ module AsteriskMesh
     def node_extension(node)
       if node['extension'].nil?
         raise EmptyExtension.new("Node should have extension " \
-            "key: #{node.inspect}")
+          "key: #{node.inspect}")
       end
     end
 
@@ -152,13 +150,6 @@ module AsteriskMesh
         raise error_class.new("#{message_name} have " \
           "duplicates: #{dupes.join(', ')}")
       end
-    end
-
-    def init(node)
-      node[:iax] = ''
-      node[:iax_reg] = ''
-      node[:dialplan_from] = ''
-      node[:dialplan_to] = ''
     end
   end
 end

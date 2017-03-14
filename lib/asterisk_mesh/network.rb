@@ -21,6 +21,8 @@ module AsteriskMesh
       nodes_to = nodes.drop(1)
 
       nodes.each do |node_from|
+        init(node_from)
+
         if node_from['host'].nil?
           dynamic_nodes << node_from
           next
@@ -31,6 +33,7 @@ module AsteriskMesh
         node_from[:dialplan_from] << @dialplan.from_mesh_static(node_from)
 
         nodes_to.each do |node_to|
+          init(node_to)
           next if node_to['host'].nil?
 
           node_from[:iax] << @iax.friend_static(node_to)
@@ -48,6 +51,18 @@ module AsteriskMesh
 
     def build_dynamic(dynamic_nodes, static_nodes)
 
+    end
+
+    def init(node)
+      return unless node[:iax].nil?
+      node[:iax] = ''
+      node[:iax_register] = ''
+
+      node[:dialplan_from_context] = @dialplan.from_mesh_context
+      node[:dialplan_from] = ''
+
+      node[:dialplan_to_context] = @dialplan.to_mesh_context
+      node[:dialplan_to] = ''
     end
   end
 end

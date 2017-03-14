@@ -2,10 +2,6 @@ require 'fileutils'
 
 module AsteriskMesh
   class NetworkExport
-    def initialize(dialplan)
-      @dialplan = dialplan
-    end
-
     def execute(network)
       mesh = network['asterisk_mesh']
       output = mesh['output']
@@ -26,10 +22,10 @@ module AsteriskMesh
 
     def export_node(node, node_dir)
       File.open("#{node_dir}/#{DIALPLAN}", 'w') do |f|
-        f.write(@dialplan.to_mesh_context)
+        f.write(node[:dialplan_to_context])
         f.write(node[:dialplan_to])
 
-        f.write(@dialplan.from_mesh_context)
+        f.write(node[:dialplan_from_context])
         f.write(node[:dialplan_from])
       end
 
