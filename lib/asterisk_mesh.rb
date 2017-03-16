@@ -15,10 +15,11 @@ module AsteriskMesh
       options = {}
 
       OptionParser.new do |parser|
-        parser.banner = 'Usage: asterisk_mesh.rb [options] [network_file]'
+        parser.banner = 'Usage: asterisk_mesh.rb [options]'
 
         parser.on('-n NETWORK_FILE', '--network=NETWORK_FILE',
-                  'network_file.yml') do |file|
+                  "Sets network file (#{DEFAULT_NETWORK_FILE} by " \
+                    "default)") do |file|
           options[:network_file] = file
         end
 
