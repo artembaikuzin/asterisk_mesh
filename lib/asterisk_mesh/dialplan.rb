@@ -48,11 +48,11 @@ module AsteriskMesh
     end
 
     def to_mesh_context
-      "[to-mesh]\n"
+      "[#{CONTEXT_TO_MESH}]\n"
     end
 
     def from_mesh_context
-      "[from-mesh]\n"
+      "[#{CONTEXT_FROM_MESH}]\n"
     end
 
     private
