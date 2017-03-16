@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['artembaykuzin@gmail.com']
 
   spec.summary       = %q{Create IAX2 peer to peer mesh network for multiple asterisk nodes}
-  spec.description   = %q{Generate IAX2 configuration files for each asterisk node to prevent single point of failure. Each node "knows" where is another node.}
+  spec.description   = %q{Generate IAX2 configuration files for each asterisk node to create mesh like connection between nodes. Each node "knows" where is another node.}
   spec.homepage      = 'https://github.com/ybinzu/asterisk_mesh.git'
   spec.license       = 'MIT'
 
@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '~> 5.0'
   spec.add_development_dependency 'minitest-reporters', '~> 1.1', '>= 1.1.14'
   spec.add_development_dependency 'pry', '~> 0.10.4'
+  spec.add_development_dependency 'simplecov', '~> 0.14.0'
 end

@@ -34,6 +34,11 @@ module AsteriskMesh
                        "#{Dir.getwd}/#{DEFAULT_NETWORK_FILE}"
                      end
 
+      unless File.exist?(network_file)
+        puts "Network file not found: #{network_file}"
+        exit(false)
+      end
+
       print 'Parsing network file...'
       nf = NetworkFile.new
       mesh = nf.parse(network_file)
@@ -49,11 +54,12 @@ module AsteriskMesh
       export.execute(mesh)
       puts 'OK'
 
+      puts
       puts "#{mesh['asterisk_mesh']['nodes'].size} nodes have been exported" \
         " (#{static.size} static, #{dynamic.size} dynamic):"
 
       mesh['asterisk_mesh']['nodes'].each do |node|
-        puts "#{node['host'].nil? ? 'DYNAMIC' : 'STATIC'}: #{node['name']}"
+        puts "#{node['host'].nil? ? 'DYNAMIC ' : 'STATIC  '}: #{node['name']}"
       end
     end
 

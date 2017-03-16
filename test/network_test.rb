@@ -4,8 +4,6 @@ class NetworkTest < Minitest::Test
   include SupportHelper
   include AsteriskMesh::Config
 
-  IAX_SECRET = 'SUPER_IAX_SECRET'
-
   def setup
     @dialplan = AsteriskMesh::Dialplan.new
     @net_file = AsteriskMesh::NetworkFile.new
@@ -25,6 +23,8 @@ class NetworkTest < Minitest::Test
   end
 
   private
+
+  IAX_SECRET = 'SUPER_IAX_SECRET'
 
   def load_yml(name)
     @net_file.parse(yml_file(name))['asterisk_mesh']['nodes']

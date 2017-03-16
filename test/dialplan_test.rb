@@ -17,6 +17,13 @@ class DialplanTest < Minitest::Test
                  'name' => 'n3.host.pro',
                  'prefix' => '55', 'primary_digits' => 4 }
 
+    @node_to_dyn = @node_to.dup
+    @node_to_dyn.delete('host')
+
+    @static_node = { 'host' => 'n0.static', 'extension' => '1XX',
+                     'name' => 'n0.static', 'prefix' => '0',
+                     'primary_digits' => 3 }
+
     @password = SecureRandom.hex
   end
 
@@ -61,5 +68,29 @@ class DialplanTest < Minitest::Test
       same => n,Hangup
 
     DIALPLAN
+  end
+
+  def test_to_mesh_dynamic_dynamic_hangup
+    assert_equal("same => n,Hangup\n\n",
+                 @dialplan.to_mesh_dynamic_dynamic_hangup)
+  end
+
+  def test_to_mesh_dynamic_dynamic
+    result = @dialplan.to_mesh_dynamic_dynamic(@static_node, @node_from_dyn,
+                                               @node_to_dyn)
+
+    assert_equal(<<~DIAL, result)
+      same => n,Dial(IAX2/mesh-test-n0.static/${EXTEN:-4},60,rtT)
+    DIAL
+  end
+
+  def test_to_mesh_dynamic_dynamic_exten
+    result = @dialplan.to_mesh_dynamic_dynamic_exten(@node_from_dyn,
+                                                     @node_to_dyn)
+
+    assert_equal(<<~DIAL, result)
+      exten => _553XXX,1,NoOp
+      same => n,Set(CALLERID(all)=55${CALLERID(num):-3})
+    DIAL
   end
 end
