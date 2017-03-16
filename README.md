@@ -24,6 +24,13 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## TODO
+1. Move dialplan and iax config from classes to external template files.
+1. Fair static nodes load rotation (dial macros?). For now, it is always one static node has high load.
+1. Load configuration from external yml file / network file.
+1. Dry run mode.
+1. Verbosity and logging.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -32,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/asterisk_mesh.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ybinzu/asterisk_mesh.
 
 
 ## License

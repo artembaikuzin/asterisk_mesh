@@ -1,3 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'asterisk_mesh'
+
+main = AsteriskMesh::Main.new
+main.execute

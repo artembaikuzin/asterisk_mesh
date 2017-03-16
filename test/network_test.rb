@@ -36,8 +36,8 @@ class NetworkTest < Minitest::Test
 
   def assert_nodes(method)
     SecureRandom.stub(:hex, IAX_SECRET) do
-      nodes = @network.build!(load_yml("#{method}.yml"))
-      nodes.each do |node|
+      static, dynamic = @network.build!(load_yml("#{method}.yml"))
+      (static + dynamic).each do |node|
         extensions, iax, iax_register = load_support(method, node)
 
         assert_equal(iax, node[:iax])

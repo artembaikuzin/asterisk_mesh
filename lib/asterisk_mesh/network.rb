@@ -12,10 +12,11 @@ module AsteriskMesh
 
       build_static(static_nodes)
 
-      return nodes if dynamic_nodes.empty?
+      return [static_nodes, dynamic_nodes] if dynamic_nodes.empty?
 
       build_dynamic(dynamic_nodes, static_nodes)
-      nodes
+
+      [static_nodes, dynamic_nodes]
     end
 
     private
