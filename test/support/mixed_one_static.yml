@@ -7,9 +7,3 @@ asterisk_mesh:
       host: n1.host.pro
 
     - extension: 3XX
-      prefix: '12'
-
-    - extension: 4XX
-      host: n3.host.pro
-
-    - extension: 5XXX

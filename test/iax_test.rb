@@ -6,17 +6,27 @@ class IAXTest < Minitest::Test
 
   def setup
     @iax = AsteriskMesh::IAX.new
-    @node = { 'name' => 'test', 'host' => 'test.pro' }
+    @node_from = { 'name' => 'test', 'host' => 'test.pro',
+                   'operator_prefix' => 'operator', 'extension' => '2XX',
+                   'primary_digits' => 3 }
+
+    @node_from_dyn = @node_from.dup
+    @node_from_dyn.delete('host')
+
+    @node_to = { 'host' => 'n3.host.pro', 'extension' => '3XXX',
+                 'name' => 'n3.host.pro',
+                 'prefix' => '55', 'primary_digits' => 4 }
+
     @password = SecureRandom.hex
   end
 
   def test_friend_static
-    result = @iax.friend_static(@node)
+    result = @iax.friend_static(@node_from)
 
     expect = <<~IAX
-      [#{node_name(@node)}]
+      [#{node_name(@node_from)}]
       type=friend
-      host=#{@node['host']}
+      host=#{@node_from['host']}
       context=#{CONTEXT_FROM_MESH}
 
     IAX
@@ -25,24 +35,39 @@ class IAXTest < Minitest::Test
   end
 
   def test_register_dynamic
-    result = @iax.register_dynamic(@node, @password)
-    expect = "register => #{node_name(@node)}:#{@password}@#{@node['host']}\n"
-
-    assert_equal(expect, result)
+    result = @iax.register_dynamic(@node_from_dyn, @node_to, @password)
+    assert_equal(<<~IAX, result)
+      register => mesh-test-n3.host.pro:#{@password}@n3.host.pro
+    IAX
   end
 
   def test_friend_dynamic
-    result = @iax.friend_dynamic(@node, @password)
+    result = @iax.friend_dynamic(@node_from_dyn, @node_to, @password)
+
     expect = <<~IAX
-      [#{node_name(@node)}]
+      [mesh-test-n3.host.pro]
       type=friend
       host=dynamic
-      context=#{CONTEXT_FROM_MESH}
+      context=from-mesh
       secret=#{@password}
-      username=#{node_name(@node)}
+      username=mesh-test-n3.host.pro
 
     IAX
 
     assert_equal(expect, result)
+  end
+
+  def test_friend_static_password
+    result = @iax.friend_static_password(@node_from_dyn, @node_to, @password)
+
+    assert_equal(<<~IAX, result)
+      [mesh-test-n3.host.pro]
+      type=friend
+      host=n3.host.pro
+      context=from-mesh
+      secret=#{@password}
+      username=mesh-test-n3.host.pro
+
+    IAX
   end
 end
