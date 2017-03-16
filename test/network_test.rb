@@ -4,6 +4,8 @@ class NetworkTest < Minitest::Test
   include SupportHelper
   include AsteriskMesh::Config
 
+  IAX_SECRET = 'SUPER_IAX_SECRET'
+
   def setup
     @dialplan = AsteriskMesh::Dialplan.new
     @net_file = AsteriskMesh::NetworkFile.new
@@ -11,38 +13,15 @@ class NetworkTest < Minitest::Test
   end
 
   def test_only_static
-    nodes = @network.build!(load_yml('only_static.yml'))
-    nodes.each do |node|
-      iax = load_result('only_static', node['name'], 'iax.conf')
-      assert_equal(iax, node[:iax])
-
-      iax_register = load_result('only_static', node['name'],
-                                 'iax_register.conf')
-      assert_equal(iax_register, node[:iax_register])
-
-      extensions = load_result('only_static', node['name'], 'extensions.conf')
-      assert_equal(extensions, extensions(node))
-    end
+    assert_nodes(:only_static)
   end
 
   def test_mixed
-    SecureRandom.stub(:hex, 'SUPER_IAX_SECRET') do
-      nodes = @network.build!(load_yml('mixed.yml'))
-      nodes.each do |node|
-        iax = load_result('mixed', node['name'], 'iax.conf')
-        assert_equal(iax, node[:iax])
-
-        iax_register = load_result('mixed', node['name'], 'iax_register.conf')
-        assert_equal(iax_register, node[:iax_register])
-
-        extensions = load_result('mixed', node['name'], 'extensions.conf')
-        assert_equal(extensions, extensions(node))
-      end
-    end
+    assert_nodes(:mixed)
   end
 
   def test_mixed_one_static
-    # assert false
+    assert_nodes(:mixed_one_static)
   end
 
   private
@@ -51,12 +30,20 @@ class NetworkTest < Minitest::Test
     @net_file.parse(yml_file(name))['asterisk_mesh']['nodes']
   end
 
-  def load_result(test, host_name, file_name)
-    File.read("#{SUPPORT}/#{test}/#{host_name}/#{file_name}")
+  def load_support(method, node)
+    load_results("#{SUPPORT}/#{method}", node)
   end
 
-  def extensions(node)
-    node[:dialplan_to_context] + node[:dialplan_to] +
-      node[:dialplan_from_context] + node[:dialplan_from]
+  def assert_nodes(method)
+    SecureRandom.stub(:hex, IAX_SECRET) do
+      nodes = @network.build!(load_yml("#{method}.yml"))
+      nodes.each do |node|
+        extensions, iax, iax_register = load_support(method, node)
+
+        assert_equal(iax, node[:iax])
+        assert_equal(iax_register, node[:iax_register])
+        assert_equal(extensions, extensions(node))
+      end
+    end
   end
 end

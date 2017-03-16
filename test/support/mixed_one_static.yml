@@ -2,8 +2,13 @@
 asterisk_mesh:
   nodes:
     - extension: 1XX
+      prefix: '55'
 
     - extension: 2XX
-      host: n1.host.pro
+      host: n1.static.pro
+      operator_prefix: 'operator_'
 
     - extension: 3XX
+      operator_prefix: 'dialme'
+
+    - extension: 44XX
