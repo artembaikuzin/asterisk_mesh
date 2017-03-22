@@ -1,5 +1,7 @@
 # AsteriskMesh
 
+[![Build Status](https://travis-ci.org/ybinzu/asterisk_mesh.svg?branch=master)](https://travis-ci.org/ybinzu/asterisk_mesh)
+
 Asterisk mesh network config generator. This gem is under construction.
 
 ## Installation
